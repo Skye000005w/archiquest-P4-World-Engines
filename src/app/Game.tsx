@@ -38,7 +38,7 @@ export default function Game() {
 
     const buttonOptions = buttonString.split(",");
     setButtonText(
-      buttonOptions.map((text) => ({ text: text, selected: false }))
+      buttonOptions.map((text:string) => ({ text: text, selected: false }))
     );
   }
 
