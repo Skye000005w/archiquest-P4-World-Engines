@@ -9,7 +9,7 @@ export async function generateImageFal(prompt: string, image_size: string) {
     headers: {
       "Content-Type": "application/json",
       Accept: "application/json",
-      Authorization: `38a98a86-4ff6-4115-aee3-75e20e17be9b:bddbe6084d1a8a28580d844bd4692c13`,
+      Authorization: `Key ${fal_key}`,
     },
     body: JSON.stringify({
       prompt: prompt,

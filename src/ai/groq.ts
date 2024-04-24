@@ -4,7 +4,7 @@ import Groq from "groq-sdk";
 const groq_key = process.env.GROQ;
 
 const groq = new Groq({
-  apiKey: groq_key,
+  apiKey:groq_key,
 });
 
 export type Message = {
