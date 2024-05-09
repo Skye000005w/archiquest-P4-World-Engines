@@ -1,3 +1,4 @@
+// src\app\CityExploration\page.tsx
 "use client";
 import { useState } from "react";
 import { getGroqCompletion } from "@/ai/groq";
@@ -6,6 +7,7 @@ import { getGeminiVision } from "@/ai/gemini";
 import { cityDescriptionPrompt, mapImagePrompt } from "@/ai/prompts";
 import ImageGallery from "@/components/ImageGallery";
 import SelectImageRegion from "@/components/SelectImageRegion";
+import ThreeScene from "@/components/ThreeScene";
 
 export default function CityExploration() {
   const [cityDescription, setCityDescription] = useState("");
@@ -60,75 +62,74 @@ export default function CityExploration() {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-900 text-white">
-      <h1 className="text-4xl font-bold mb-8">Retro City Explorer</h1>
-      <div className="flex flex-col gap-4 w-full max-w-2xl">
+    <div className="flex flex-col gap-4 bg-green-900 text-white p-4 rounded-lg">
+      <div className="flex justify-between items-center mb-4">
+        <h1 className="text-2xl font-bold">City Explorer</h1>
         <button
           onClick={generateCity}
-          className="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded"
+          className="bg-yellow-500 text-green-900 px-4 py-2 rounded-lg font-bold hover:bg-yellow-600"
         >
           Generate New City
         </button>
+      </div>
 
-        {cityDescription && (
-          <div className="bg-gray-800 p-4 rounded">
-            <h2 className="text-xl font-bold mb-2">City Description:</h2>
-            <p>{cityDescription}</p>
-          </div>
-        )}
+      {cityDescription && (
+        <div className="bg-green-800 p-4 rounded-lg">
+          <h2 className="text-xl font-bold mb-2">City Description:</h2>
+          <p>{cityDescription}</p>
+        </div>
+      )}
 
-        {selectedFullScreenImage && !isCropping && (
-          <div
-            className="fixed top-0 left-0 w-full h-full bg-black bg-opacity-75 flex items-center justify-center z-50"
-            onClick={handleCloseFullScreen}
+      {selectedFullScreenImage && !isCropping && (
+        <div className="fixed top-0 left-0 w-full h-full bg-black bg-opacity-75 flex items-center justify-center z-50">
+          <ThreeScene imageUrl={selectedFullScreenImage} />
+          <button
+            onClick={(e) => {
+              e.stopPropagation();
+              handleCropClick();
+            }}
+            className="absolute bottom-4 right-4 bg-yellow-500 text-green-900 px-4 py-2 rounded-lg font-bold hover:bg-yellow-600"
           >
-            <img src={selectedFullScreenImage} alt="Full Screen" className="max-w-full max-h-full" />
-            <button
-              onClick={(e) => {
-                e.stopPropagation();
-                handleCropClick();
-              }}
-              className="absolute bottom-4 right-4 bg-yellow-500 hover:bg-yellow-600 text-black px-4 py-2 rounded"
-            >
-              Crop
-            </button>
-          </div>
-        )}
+            Crop
+          </button>
+        </div>
+      )}
 
-        {isCropping && selectedFullScreenImage && (
-          <SelectImageRegion
-            img={selectedFullScreenImage}
-            onSelect={handleImageCrop}
-            onCancel={handleCropCancel}
-          />
-        )}
+      {isCropping && selectedFullScreenImage && (
+        <SelectImageRegion
+          img={selectedFullScreenImage}
+          onSelect={handleImageCrop}
+          onCancel={handleCropCancel}
+        />
+      )}
 
+      <div className="flex justify-between items-center">
         <button
           onClick={() => setShowGallery(!showGallery)}
-          className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded"
+          className="bg-yellow-500 text-green-900 px-4 py-2 rounded-lg font-bold hover:bg-yellow-600"
         >
           {showGallery ? "Hide Gallery" : "Show Gallery"}
         </button>
-
-        {showGallery && (
-          <div className="bg-gray-800 p-4 rounded">
-            <h2 className="text-xl font-bold mb-2">City Map Gallery:</h2>
-            <ImageGallery images={cityMapImages} handleClickImage={handleImageClick} />
-          </div>
-        )}
-
-        <div className="bg-gray-800 p-4 rounded">
-          <h2 className="text-xl font-bold mb-2">Collected Map Fragments:</h2>
-          <ImageGallery images={collectedMapFragments} />
-        </div>
-
-        {selectedImageDescription && (
-          <div className="bg-gray-800 p-4 rounded">
-            <h2 className="text-xl font-bold mb-2">Selected Image Description:</h2>
-            <p>{selectedImageDescription}</p>
-          </div>
-        )}
       </div>
+
+      {showGallery && (
+        <div className="bg-green-800 p-4 rounded-lg">
+          <h2 className="text-xl font-bold mb-2">City Map Gallery:</h2>
+          <ImageGallery images={cityMapImages} handleClickImage={handleImageClick} />
+        </div>
+      )}
+
+      <div className="bg-green-800 p-4 rounded-lg">
+        <h2 className="text-xl font-bold mb-2">Collected Map Fragments:</h2>
+        <ImageGallery images={collectedMapFragments} />
+      </div>
+
+      {selectedImageDescription && (
+        <div className="bg-green-800 p-4 rounded-lg">
+          <h2 className="text-xl font-bold mb-2">Selected Image Description:</h2>
+          <p>{selectedImageDescription}</p>
+        </div>
+      )}
     </div>
   );
 }

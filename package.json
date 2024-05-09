@@ -10,6 +10,8 @@
   },
   "dependencies": {
     "@google/generative-ai": "^0.11.0",
+    "@react-three/drei": "^9.105.6",
+    "@react-three/fiber": "^8.16.5",
     "groq-sdk": "^0.3.2",
     "next": "14.2.2",
     "react": "^18",
@@ -21,6 +23,7 @@
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
+    "@types/three": "^0.164.0",
     "eslint": "^8",
     "eslint-config-next": "14.2.2",
     "postcss": "^8",
